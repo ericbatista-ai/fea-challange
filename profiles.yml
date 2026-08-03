@@ -1,0 +1,16 @@
+# Uso local (dbt Fusion carrega .env automaticamente se as vars tiverem prefixo DBT_):
+#   dbt debug --profiles-dir .
+#
+# Ou configure ~/.dbt/profiles.yml com o mesmo conteúdo.
+
+fea_challange:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      catalog: "{{ env_var('DBT_DATABRICKS_CATALOG', 'adventureworks') }}"
+      schema: "{{ env_var('DBT_DATABRICKS_SCHEMA', 'raw') }}"
+      host: "{{ env_var('DBT_DATABRICKS_HOST') }}"
+      http_path: "{{ env_var('DBT_DATABRICKS_HTTP_PATH') }}"
+      token: "{{ env_var('DBT_DATABRICKS_TOKEN') }}"
+      threads: 4
