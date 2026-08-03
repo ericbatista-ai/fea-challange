@@ -1,0 +1,357 @@
+version: 2
+
+sources:
+  - name: adventureworks_raw
+    description: >
+      Camada raw do AdventureWorks no Databricks Unity Catalog.
+      Dados extraídos do PostgreSQL local (schemas person, production,
+      humanresources, purchasing, sales) via scripts/load_raw_to_databricks.py.
+      Naming: {schema_origem}_{tabela}.
+    database: adventureworks
+    schema: raw
+    tables:
+      # --- person ---
+      - name: person_address
+        description: "Raw copy of person.address from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_addresstype
+        description: "Raw copy of person.addresstype from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_businessentity
+        description: "Raw copy of person.businessentity from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_businessentityaddress
+        description: "Raw copy of person.businessentityaddress from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_businessentitycontact
+        description: "Raw copy of person.businessentitycontact from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_contacttype
+        description: "Raw copy of person.contacttype from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_countryregion
+        description: "Raw copy of person.countryregion from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_emailaddress
+        description: "Raw copy of person.emailaddress from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_password
+        description: "Raw copy of person.password from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_person
+        description: "Raw copy of person.person from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_personphone
+        description: "Raw copy of person.personphone from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_phonenumbertype
+        description: "Raw copy of person.phonenumbertype from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: person_stateprovince
+        description: "Raw copy of person.stateprovince from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      # --- production ---
+      - name: production_billofmaterials
+        description: "Raw copy of production.billofmaterials from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_culture
+        description: "Raw copy of production.culture from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_document
+        description: "Raw copy of production.document from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_illustration
+        description: "Raw copy of production.illustration from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_location
+        description: "Raw copy of production.location from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_product
+        description: "Raw copy of production.product from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productcategory
+        description: "Raw copy of production.productcategory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productcosthistory
+        description: "Raw copy of production.productcosthistory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productdescription
+        description: "Raw copy of production.productdescription from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productdocument
+        description: "Raw copy of production.productdocument from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productinventory
+        description: "Raw copy of production.productinventory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productlistpricehistory
+        description: "Raw copy of production.productlistpricehistory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productmodel
+        description: "Raw copy of production.productmodel from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productmodelillustration
+        description: "Raw copy of production.productmodelillustration from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productmodelproductdescriptionculture
+        description: "Raw copy of production.productmodelproductdescriptionculture from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productphoto
+        description: "Raw copy of production.productphoto from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productproductphoto
+        description: "Raw copy of production.productproductphoto from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productreview
+        description: "Raw copy of production.productreview from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_productsubcategory
+        description: "Raw copy of production.productsubcategory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_scrapreason
+        description: "Raw copy of production.scrapreason from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_transactionhistory
+        description: "Raw copy of production.transactionhistory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_transactionhistoryarchive
+        description: "Raw copy of production.transactionhistoryarchive from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_unitmeasure
+        description: "Raw copy of production.unitmeasure from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_workorder
+        description: "Raw copy of production.workorder from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: production_workorderrouting
+        description: "Raw copy of production.workorderrouting from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      # --- humanresources ---
+      - name: humanresources_department
+        description: "Raw copy of humanresources.department from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: humanresources_employee
+        description: "Raw copy of humanresources.employee from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: humanresources_employeedepartmenthistory
+        description: "Raw copy of humanresources.employeedepartmenthistory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: humanresources_employeepayhistory
+        description: "Raw copy of humanresources.employeepayhistory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: humanresources_jobcandidate
+        description: "Raw copy of humanresources.jobcandidate from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: humanresources_shift
+        description: "Raw copy of humanresources.shift from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      # --- purchasing ---
+      - name: purchasing_productvendor
+        description: "Raw copy of purchasing.productvendor from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: purchasing_purchaseorderdetail
+        description: "Raw copy of purchasing.purchaseorderdetail from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: purchasing_purchaseorderheader
+        description: "Raw copy of purchasing.purchaseorderheader from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: purchasing_shipmethod
+        description: "Raw copy of purchasing.shipmethod from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: purchasing_vendor
+        description: "Raw copy of purchasing.vendor from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      # --- sales ---
+      - name: sales_countryregioncurrency
+        description: "Raw copy of sales.countryregioncurrency from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_creditcard
+        description: "Raw copy of sales.creditcard from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_currency
+        description: "Raw copy of sales.currency from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_currencyrate
+        description: "Raw copy of sales.currencyrate from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_customer
+        description: "Raw copy of sales.customer from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_personcreditcard
+        description: "Raw copy of sales.personcreditcard from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salesorderdetail
+        description: "Raw copy of sales.salesorderdetail from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salesorderheader
+        description: "Raw copy of sales.salesorderheader from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salesorderheadersalesreason
+        description: "Raw copy of sales.salesorderheadersalesreason from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salesperson
+        description: "Raw copy of sales.salesperson from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salespersonquotahistory
+        description: "Raw copy of sales.salespersonquotahistory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salesreason
+        description: "Raw copy of sales.salesreason from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salestaxrate
+        description: "Raw copy of sales.salestaxrate from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salesterritory
+        description: "Raw copy of sales.salesterritory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_salesterritoryhistory
+        description: "Raw copy of sales.salesterritoryhistory from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_shoppingcartitem
+        description: "Raw copy of sales.shoppingcartitem from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_specialoffer
+        description: "Raw copy of sales.specialoffer from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_specialofferproduct
+        description: "Raw copy of sales.specialofferproduct from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
+      - name: sales_store
+        description: "Raw copy of sales.store from PostgreSQL."
+        columns:
+          - name: _loaded_at
+            description: Timestamp when the EL job landed this table.
