@@ -32,6 +32,6 @@ models:
       +schema: intermediate
       +tags: ["intermediate"]
     marts:
-      +materialized: ephemeral
+      +materialized: table
       +schema: marts
       +tags: ["mart"]
