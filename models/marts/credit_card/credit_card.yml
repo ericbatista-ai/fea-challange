@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_credit_card
+    description: >
+      Credit card dimension — one row per sales.creditcard.
+      Used to slice sales by card type (questions a, c, d).
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [credit_card_pk]
+    columns:
+      - name: credit_card_pk
+        description: Natural key from sales.creditcard.
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: card_type
+        description: Card brand/type used on the order payment.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: card_number
+        description: Card number from source (AdventureWorks sample data).
+        data_type: string
+
+      - name: expiration_month
+        description: Card expiration month (1–12).
+        data_type: int
+
+      - name: expiration_year
+        description: Card expiration year.
+        data_type: int
+
+      - name: credit_card_modified_at
+        description: Last modification timestamp from sales.creditcard.
+        data_type: timestamp

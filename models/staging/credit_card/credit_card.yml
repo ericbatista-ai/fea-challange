@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_sales_creditcard
+    description: >
+      Staging for sales.creditcard. Payment cards used on sales orders;
+      card_type supports sales filters in questions a, c, d.
+    columns:
+      - name: credit_card_pk
+        description: Primary key of the credit card.
+        tests:
+          - unique
+          - not_null
+      - name: card_type
+        description: Card brand/type (e.g. ColonialVoice, Vista).
+        tests:
+          - not_null
