@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: stg_person_address
+    description: >
+      Staging for person.address. Street-level locations; city and
+      state_province_fk feed dim_geography; full address feeds dim_address later.
+    columns:
+      - name: address_pk
+        description: Primary key of the address.
+        tests:
+          - unique
+          - not_null
+      - name: state_province_fk
+        description: Foreign key to person.stateprovince.
+        tests:
+          - not_null
+
+  - name: stg_person_stateprovince
+    description: >
+      Staging for person.stateprovince. State/province reference data
+      linked to country region and optionally sales territory.
+    columns:
+      - name: state_province_pk
+        description: Primary key of the state/province.
+        tests:
+          - unique
+          - not_null
+      - name: country_region_fk
+        description: Foreign key to person.countryregion (country code).
+        tests:
+          - not_null
+
+  - name: stg_person_countryregion
+    description: Staging for person.countryregion. Country reference data.
+    columns:
+      - name: country_region_pk
+        description: ISO-style country/region code (PK).
+        tests:
+          - unique
+          - not_null
