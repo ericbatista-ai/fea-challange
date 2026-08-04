@@ -4,14 +4,35 @@ models:
   - name: stg_sales_customer
     description: >
       Staging layer for sales.customer. Cleans column names and exposes
-      raw fields for downstream intermediate/mart models (e.g. dim_customer).
+      raw fields for downstream intermediate/mart models.
     columns:
-      - name: customerid
+      - name: customer_pk
         description: Primary key of the customer.
         tests:
           - unique
           - not_null
-      - name: territoryid
+      - name: territory_fk
         description: Territory ID.
         tests:
           - not_null
+  - name: stg_person
+    description: >
+      Staging layer for person.person. The table has information about 
+      the properties of the customer.
+    columns:
+      - name: person_business_entity_pk
+        description: Business Entity ID. (can be a store or a person)
+        tests:
+          - not_null
+          - unique
+  - name: stg_sales_store
+    description: >
+      Staging layer for sales.store. The table has information about 
+      the sotres that buy products from Adventureworks to resell it.
+    columns:
+      - name: store_business_entity_pk
+        description: Business Entity ID. (This case is a store)
+        tests:
+          - not_null
+          - unique
+          
