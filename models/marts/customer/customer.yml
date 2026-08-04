@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: Customer dimension — one row per sales customer.
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [customer_pk]
+    columns:
+      - name: customer_pk
+        description: Natural key from sales.customer.
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: territory_fk
+        description: foreign key to join with dim_territory
+        data_type: int
+        tests:
+          - not_null
+
+      - name: customer_modified_at
+        description: Last modification timestamp from sales.customer.
+        data_type: timestamp
+
+      - name: customer_type
+        description: person | store | store_contact | unknown
+        data_type: string
+        tests:
+          - not_null
+          - accepted_values:
+              arguments: 
+                values: ['person', 'store', 'store_contact', 'unknown']
+
+      - name: customer_display_name
+        description: Display name — person full name or store name based on customer_type.
+        data_type: string
+
+      - name: person_full_name
+        description: Full name from person.person when the customer is linked to a person.
+        data_type: string
+
+      - name: store_name
+        description: Store name from sales.store when the customer is linked to a store.
+        data_type: string

@@ -12,34 +12,28 @@ models:
           - unique
           - not_null
       - name: territory_fk
-        description: Territory ID.
+        description: Territory ID assigned to the customer account.
         tests:
           - not_null
-      - name: _loaded_at
-        description: Timestamp when the EL job landed this table.
 
   - name: stg_person_person
     description: >
-      Staging layer for person.person. The table has information about 
-      the properties of the customer.
+      Staging layer for person.person. Individual people that can be
+      linked to a sales customer via person_fk.
     columns:
       - name: person_business_entity_pk
-        description: Business Entity ID. (can be a store or a person)
+        description: Business Entity ID of the person (PK).
         tests:
           - not_null
           - unique
-      - name: _loaded_at
-        description: Timestamp when the EL job landed this table.
 
   - name: stg_sales_store
     description: >
-      Staging layer for sales.store. The table has information about 
-      the store that buy products from Adventureworks to resell it.
+      Staging layer for sales.store. Stores that buy products from
+      AdventureWorks to resell.
     columns:
       - name: store_business_entity_pk
-        description: Business Entity ID. (This case is a store)
+        description: Business Entity ID of the store (PK).
         tests:
           - not_null
           - unique
-      - name: _loaded_at
-        description: Timestamp when the EL job landed this table.

@@ -3,7 +3,7 @@
 #
 # Ou configure ~/.dbt/profiles.yml com o mesmo conteúdo.
 
-fea_challange:
+fea_challenge:
   target: dev
   outputs:
     dev:
