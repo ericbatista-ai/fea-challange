@@ -1,8 +1,8 @@
-name: 'fea_challange'
+name: 'fea_challenge'
 version: '1.0.0'
 config-version: 2
 
-profile: 'fea_challange'
+profile: 'fea_challenge'
 
 dbt-cloud:
   project-id: 70506183156679
