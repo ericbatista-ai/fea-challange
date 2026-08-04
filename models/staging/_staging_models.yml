@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_sales_customer
+    description: >
+      Staging layer for sales.customer. Cleans column names and exposes
+      raw fields for downstream intermediate/mart models (e.g. dim_customer).
+    columns:
+      - name: customerid
+        description: Primary key of the customer.
+        tests:
+          - unique
+          - not_null
+      - name: territoryid
+        description: Territory ID.
+        tests:
+          - not_null
