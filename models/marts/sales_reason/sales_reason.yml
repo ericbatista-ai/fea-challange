@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_sales_reason
+    description: >
+      Sales reason dimension — one row per sales.salesreason.
+      Join to orders later via bridge_sales_order_reason (separate branch).
+      Supports reason filters and question f (Promotion).
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [sales_reason_pk]
+    columns:
+      - name: sales_reason_pk
+        description: Natural key from sales.salesreason.
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_reason_name
+        description: Reason name (e.g. Promotion, Manufacturer, Quality).
+        data_type: string
+        tests:
+          - not_null
+
+      - name: sales_reason_type
+        description: Reason category (e.g. Marketing, Promotion, Other).
+        data_type: string
+
+      - name: sales_reason_modified_at
+        description: Last modification timestamp from sales.salesreason.
+        data_type: timestamp
