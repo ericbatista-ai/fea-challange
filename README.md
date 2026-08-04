@@ -78,7 +78,7 @@ dbt build --profiles-dir . --select dim_customer
 ```
 
 - Sources: `models/raw/_adventureworks_raw__sources.yml`
-- Domains: `models/staging|intermediate|marts/{customer,geography}/`
+- Domains: `models/staging|intermediate|marts/{customer,geography,product}/`
 - Schemas de saída: `staging`, `intermediate`, `marts` (via `dbt_project.yml` + `generate_schema_name`)
 
 ```bash

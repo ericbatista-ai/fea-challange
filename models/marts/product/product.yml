@@ -1,0 +1,110 @@
+version: 2
+
+models:
+  - name: dim_product
+    description: >
+      Product dimension — one row per production.product. Includes
+      subcategory and category names for sales slicing (questions a–f).
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [product_pk]
+    columns:
+      - name: product_pk
+        description: Natural key from production.product.
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: Product display name.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: product_number
+        description: Business product number / SKU-style code.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: is_manufactured
+        description: True if the product is manufactured in-house.
+        data_type: boolean
+
+      - name: is_finished_good
+        description: True if the product is a finished good available for sale.
+        data_type: boolean
+
+      - name: product_color
+        description: Product color (nullable).
+        data_type: string
+
+      - name: standard_cost
+        description: Standard cost of the product.
+        data_type: decimal(19, 4)
+
+      - name: list_price
+        description: List price of the product.
+        data_type: decimal(19, 4)
+
+      - name: product_size
+        description: Size label (nullable).
+        data_type: string
+
+      - name: product_line
+        description: Product line code (nullable).
+        data_type: string
+
+      - name: product_class
+        description: Product class code (nullable).
+        data_type: string
+
+      - name: product_style
+        description: Product style code (nullable).
+        data_type: string
+
+      - name: product_subcategory_fk
+        description: Foreign key to product subcategory (nullable for some products).
+        data_type: int
+
+      - name: product_subcategory_name
+        description: Subcategory display name.
+        data_type: string
+
+      - name: product_category_fk
+        description: Foreign key to product category.
+        data_type: int
+
+      - name: product_category_name
+        description: Category display name (e.g. Bikes, Components).
+        data_type: string
+
+      - name: sell_start_at
+        description: Date/time when the product became available for sale.
+        data_type: timestamp
+
+      - name: sell_end_at
+        description: Date/time when the product stopped being sold (nullable).
+        data_type: timestamp
+
+      - name: discontinued_at
+        description: Discontinuation timestamp (nullable).
+        data_type: timestamp
+
+      - name: product_modified_at
+        description: Last modification timestamp from production.product.
+        data_type: timestamp
+
+      - name: is_sellable
+        description: >
+          False when sell_end_at is in the past or discontinued_at is set;
+          otherwise true.
+        data_type: boolean
+        tests:
+          - not_null

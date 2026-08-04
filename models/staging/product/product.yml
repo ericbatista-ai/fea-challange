@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_production_product
+    description: >
+      Staging for production.product. Product master data for sales
+      analytics and dim_product.
+    columns:
+      - name: product_pk
+        description: Primary key of the product.
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_production_productsubcategory
+    description: Staging for production.productsubcategory.
+    columns:
+      - name: product_subcategory_pk
+        description: Primary key of the product subcategory.
+        tests:
+          - unique
+          - not_null
+      - name: product_category_fk
+        description: Foreign key to production.productcategory.
+        tests:
+          - not_null
+
+  - name: stg_production_productcategory
+    description: Staging for production.productcategory.
+    columns:
+      - name: product_category_pk
+        description: Primary key of the product category.
+        tests:
+          - unique
+          - not_null
