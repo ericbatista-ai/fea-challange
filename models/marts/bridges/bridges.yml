@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: bridge_sales_order_reason
+    description: >
+      Bridge (many-to-many) between sales orders and sales reasons.
+      Grain: one row per sales_order_fk + sales_reason_fk.
+
+      Why a bridge: an order can have multiple reasons. Putting reason
+      on fact_sales (line grain) would duplicate qty/revenue. Use this
+      bridge to filter or group by reason without inflating measures
+      when reason is not in the query (questions a, c, d, f).
+    config:
+      contract:
+        enforced: true
+      tags: ["bridge", "mart"]
+    constraints:
+      - type: primary_key
+        columns: [sales_order_fk, sales_reason_fk]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - sales_order_fk
+              - sales_reason_fk
+    columns:
+      - name: sales_order_fk
+        description: Sales order header ID — join key to fact_sales.sales_order_id.
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+
+      - name: sales_reason_fk
+        description: Foreign key to dim_sales_reason.sales_reason_pk.
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_sales_reason')
+                field: sales_reason_pk
+
+      - name: sales_reason_name
+        description: Denormalized reason name for convenience (e.g. Promotion).
+        data_type: string
+        tests:
+          - not_null
+
+      - name: order_reason_modified_at
+        description: Modified timestamp from the source relationship row.
+        data_type: timestamp

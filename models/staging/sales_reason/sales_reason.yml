@@ -15,3 +15,23 @@ models:
         description: Reason display name (e.g. Promotion, Price, Quality).
         tests:
           - not_null
+
+  - name: stg_sales_salesorderheadersalesreason
+    description: >
+      Staging for sales.salesorderheadersalesreason. Many-to-many link
+      between sales orders and sales reasons (source for the bridge).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - sales_order_fk
+              - sales_reason_fk
+    columns:
+      - name: sales_order_fk
+        description: Sales order ID (header).
+        tests:
+          - not_null
+      - name: sales_reason_fk
+        description: Sales reason ID.
+        tests:
+          - not_null
