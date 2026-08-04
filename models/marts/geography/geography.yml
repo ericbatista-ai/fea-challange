@@ -29,25 +29,9 @@ models:
         tests:
           - not_null
 
-      - name: state_province_fk
-        description: Natural key to person.stateprovince.
-        data_type: int
-        tests:
-          - not_null
-
-      - name: state_province_code
-        description: State/province code (e.g. WA, CA).
-        data_type: string
-
       - name: state_province_name
         description: State/province display name.
         data_type: string
-
-      - name: country_region_code
-        description: Country/region code (e.g. US, GB).
-        data_type: string
-        tests:
-          - not_null
 
       - name: country_region_name
         description: Country/region display name.
