@@ -1,8 +1,8 @@
-name: 'fea_challange'
+name: 'fea_challenge'
 version: '1.0.0'
 config-version: 2
 
-profile: 'fea_challange'
+profile: 'fea_challenge'
 
 dbt-cloud:
   project-id: 70506183156679
@@ -20,7 +20,7 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  fea_challange:
+  fea_challenge:
     # Camada raw: tabelas já materializadas pelo EL (scripts/load_raw_to_databricks.py)
     # em adventureworks.raw. O dbt declara-as como sources e transforma a partir daqui.
     staging:

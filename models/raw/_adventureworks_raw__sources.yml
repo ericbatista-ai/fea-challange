@@ -3,10 +3,10 @@ version: 2
 sources:
   - name: adventureworks_raw
     description: >
-      Camada raw do AdventureWorks no Databricks Unity Catalog.
-      Dados extraídos do PostgreSQL local (schemas person, production,
-      humanresources, purchasing, sales) via scripts/load_raw_to_databricks.py.
-      Naming: {schema_origem}_{tabela}.
+      Raw Layer of AdventureWorks on Databricks Unity Catalog.
+      Data extracted from local PostgreSQL (schemas person, production,
+      humanresources, purchasing, sales) using scripts/load_raw_to_databricks.py.
+      Naming: {origin_schema}_{table}.
     database: adventureworks
     schema: raw
     tables:
