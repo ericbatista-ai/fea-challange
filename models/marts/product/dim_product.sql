@@ -13,9 +13,7 @@ with product as (
         , product_line
         , product_class
         , product_style
-        , product_subcategory_fk
         , product_subcategory_name
-        , product_category_fk
         , product_category_name
         , sell_start_at
         , sell_end_at

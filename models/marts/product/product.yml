@@ -69,17 +69,9 @@ models:
         description: Product style code (nullable).
         data_type: string
 
-      - name: product_subcategory_fk
-        description: Foreign key to product subcategory (nullable for some products).
-        data_type: int
-
       - name: product_subcategory_name
         description: Subcategory display name.
         data_type: string
-
-      - name: product_category_fk
-        description: Foreign key to product category.
-        data_type: int
 
       - name: product_category_name
         description: Category display name (e.g. Bikes, Components).
