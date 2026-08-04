@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_sales_salesreason
+    description: >
+      Staging for sales.salesreason. Reasons associated with sales orders
+      (e.g. Promotion) for questions a, c, d, f.
+    columns:
+      - name: sales_reason_pk
+        description: Primary key of the sales reason.
+        tests:
+          - unique
+          - not_null
+      - name: sales_reason_name
+        description: Reason display name (e.g. Promotion, Price, Quality).
+        tests:
+          - not_null
