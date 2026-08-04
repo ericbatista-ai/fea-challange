@@ -10,7 +10,12 @@ renamed as (
         cast(businessentityid as INT) as person_business_entity_pk
         , cast(persontype as STRING) as person_type
         , cast(
-            trim(concat_ws(' ', firstname, middlename, lastname)) as STRING
+            trim(
+                firstname
+                || ' '
+                || coalesce(middlename || ' ', '')
+                || lastname
+            ) as STRING
           ) as person_full_name
         , cast(firstname as STRING) as person_first_name
         , cast(middlename as STRING) as person_middle_name
