@@ -73,14 +73,13 @@ O script lê `.env`. Cria catalog/schema e materializa as **68 tabelas** com pre
 
 ```bash
 dbt debug --profiles-dir .
+dbt deps
 dbt ls --profiles-dir . --select source:adventureworks_raw
-dbt build --profiles-dir . --select dim_customer
+dbt build --profiles-dir . --select +dim_customer
+dbt build --profiles-dir . --select dim_date
 ```
 
 - Sources: `models/raw/_adventureworks_raw__sources.yml`
-- Domains: `models/staging|intermediate|marts/{customer,geography,product,credit_card,sales_reason}/`
+- Domains: `models/staging|intermediate|marts/{customer,geography,product,credit_card,sales_reason,date}/`
+- Packages: `packages.yml` (`dbt_utils` for `dim_date` spine) — run `dbt deps` once after clone/pull
 - Schemas de saída: `staging`, `intermediate`, `marts` (via `dbt_project.yml` + `generate_schema_name`)
-
-```bash
-dbt build --profiles-dir . --select dim_geography
-```
