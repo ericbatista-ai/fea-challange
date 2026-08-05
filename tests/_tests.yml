@@ -51,12 +51,25 @@ data_tests:
       dim_geography count equals distinct city + state + country keys
       derived from person_address / person_stateprovince (same grain as the dim).
 
+  - name: assert_dim_salesperson_count_matches_raw
+    description: dim_salesperson count equals adventureworks_raw.sales_salesperson.
+
+  - name: assert_dim_currency_count_matches_raw
+    description: dim_currency count equals adventureworks_raw.sales_currency.
+
+  - name: assert_dim_special_offer_count_matches_raw
+    description: dim_special_offer count equals adventureworks_raw.sales_specialoffer.
+
   - name: assert_fact_sales_fks_exist_in_dims
     description: >
       No orphan foreign keys on fact_sales for customer, product, order_date,
-      geography (when not null), or credit_card (when not null).
+      geography (when not null), credit_card (when not null), sales_person
+      (when not null), currency / from_currency (when not null), or
+      special_offer (when not null).
 
   - name: assert_staging_sales_counts_match_raw
     description: >
       Key staging models preserve raw row counts (order header/detail,
-      customer, product, credit card, sales reason).
+      customer, product, credit card, sales reason, salesperson, currency,
+      currencyrate, specialoffer, and HR employee/department/history used by
+      dim_salesperson).

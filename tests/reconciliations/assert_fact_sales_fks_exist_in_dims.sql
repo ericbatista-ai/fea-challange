@@ -43,6 +43,42 @@ with orphans as (
     where f.credit_card_fk is not null
       and d.credit_card_pk is null
 
+    union all
+
+    select 'sales_person_fk', count(*)
+    from {{ ref('fact_sales') }} as f
+    left join {{ ref('dim_salesperson') }} as d
+        on d.salesperson_pk = f.sales_person_fk
+    where f.sales_person_fk is not null
+      and d.salesperson_pk is null
+
+    union all
+
+    select 'currency_fk', count(*)
+    from {{ ref('fact_sales') }} as f
+    left join {{ ref('dim_currency') }} as d
+        on d.currency_pk = f.currency_fk
+    where f.currency_fk is not null
+      and d.currency_pk is null
+
+    union all
+
+    select 'from_currency_fk', count(*)
+    from {{ ref('fact_sales') }} as f
+    left join {{ ref('dim_currency') }} as d
+        on d.currency_pk = f.from_currency_fk
+    where f.from_currency_fk is not null
+      and d.currency_pk is null
+
+    union all
+
+    select 'special_offer_fk', count(*)
+    from {{ ref('fact_sales') }} as f
+    left join {{ ref('dim_special_offer') }} as d
+        on d.special_offer_pk = f.special_offer_fk
+    where f.special_offer_fk is not null
+      and d.special_offer_pk is null
+
 )
 
 select

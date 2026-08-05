@@ -42,6 +42,55 @@ with checks as (
         , (select count(*) from {{ source('adventureworks_raw', 'sales_salesreason') }})
         , (select count(*) from {{ ref('stg_sales_salesreason') }})
 
+    union all
+
+    select
+        'stg_sales_salesperson'
+        , (select count(*) from {{ source('adventureworks_raw', 'sales_salesperson') }})
+        , (select count(*) from {{ ref('stg_sales_salesperson') }})
+
+    union all
+
+    select
+        'stg_sales_currency'
+        , (select count(*) from {{ source('adventureworks_raw', 'sales_currency') }})
+        , (select count(*) from {{ ref('stg_sales_currency') }})
+
+    union all
+
+    select
+        'stg_sales_currencyrate'
+        , (select count(*) from {{ source('adventureworks_raw', 'sales_currencyrate') }})
+        , (select count(*) from {{ ref('stg_sales_currencyrate') }})
+
+    union all
+
+    select
+        'stg_sales_specialoffer'
+        , (select count(*) from {{ source('adventureworks_raw', 'sales_specialoffer') }})
+        , (select count(*) from {{ ref('stg_sales_specialoffer') }})
+
+    union all
+
+    select
+        'stg_humanresources_employee'
+        , (select count(*) from {{ source('adventureworks_raw', 'humanresources_employee') }})
+        , (select count(*) from {{ ref('stg_humanresources_employee') }})
+
+    union all
+
+    select
+        'stg_humanresources_department'
+        , (select count(*) from {{ source('adventureworks_raw', 'humanresources_department') }})
+        , (select count(*) from {{ ref('stg_humanresources_department') }})
+
+    union all
+
+    select
+        'stg_humanresources_employeedepartmenthistory'
+        , (select count(*) from {{ source('adventureworks_raw', 'humanresources_employeedepartmenthistory') }})
+        , (select count(*) from {{ ref('stg_humanresources_employeedepartmenthistory') }})
+
 )
 
 select
