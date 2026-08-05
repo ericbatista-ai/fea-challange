@@ -48,7 +48,7 @@ flowchart LR
 
 ## Feature B — `dim_currency` (+ optional rate)
 
-**Branch:** `feature/dim_currency`
+**Branch:** `feature/dim_currency` — **DONE** (dim_currency + rate staging for fact; no dim_currency_rate)
 
 **Why:** Show volume by currency; often one dominant currency — still valuable to prove.
 
