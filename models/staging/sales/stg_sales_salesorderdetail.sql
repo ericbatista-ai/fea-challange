@@ -15,7 +15,12 @@ renamed as (
         , cast(specialofferid as INT) as special_offer_fk
         , cast(unitprice as DECIMAL(19, 4)) as unit_price
         , cast(unitpricediscount as DECIMAL(19, 4)) as unit_price_discount_rate
-        , cast(linetotal as DECIMAL(19, 4)) as line_total
+        , cast(
+            cast(unitprice as DECIMAL(19, 4))
+            * (1 - cast(unitpricediscount as DECIMAL(19, 4)))
+            * cast(orderqty as INT)
+            as DECIMAL(19, 4)
+          ) as line_total
         , cast(modifieddate as TIMESTAMP) as order_detail_modified_at
 
     from source_detail
