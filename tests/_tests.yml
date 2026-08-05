@@ -1,0 +1,15 @@
+version: 2
+
+data_tests:
+  - name: assert_gross_sales_2011
+    description: >
+      Asserts that sum(fact_sales.net_line_total) for order_year = 2011 equals
+      12,641,672.21 (±0.01).
+
+      Why not 12,646,112.16 from the challenge brief? That published figure does
+      not match the AdventureWorks PostgreSQL dataset used as the source of
+      truth in this project. Local Postgres validation:
+      SUM(sales.salesorderheader.subtotal) for 2011 = 12,641,672.21 (1,607 orders),
+      aligned with recomputed line totals and with Databricks/dbt fact_sales.
+      The ~4,439.95 gap vs the brief is a source/edition difference, not a
+      transformation error.
