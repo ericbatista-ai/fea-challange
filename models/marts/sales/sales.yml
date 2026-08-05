@@ -14,6 +14,7 @@ models:
 
       Dimensions (join):
       - product → dim_product (product_fk)
+      - special offer / campaign → dim_special_offer (special_offer_fk)
       - card type → dim_credit_card (credit_card_fk)
       - sales reason → bridge_sales_order_reason on sales_order_id
         (do not put reason on the fact — M:N)
@@ -76,6 +77,18 @@ models:
               arguments:
                 to: ref('dim_product')
                 field: product_pk
+
+      - name: special_offer_fk
+        description: >
+          FK to dim_special_offer.special_offer_pk (line-level campaign /
+          discount). Offer 1 is typically No Discount.
+        data_type: int
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_special_offer')
+                field: special_offer_pk
 
       - name: credit_card_fk
         description: FK to dim_credit_card.credit_card_pk (nullable).
