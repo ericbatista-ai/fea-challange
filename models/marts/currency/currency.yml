@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: dim_currency
+    description: >
+      Currency dimension — one row per sales.currency code.
+      Join from fact_sales.currency_fk (to-currency on the order rate).
+      When fact.currency_rate_fk is null, currency_fk is set to USD
+      (local/default currency for AdventureWorks orders without FX).
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [currency_pk]
+    columns:
+      - name: currency_pk
+        description: Currency code (e.g. USD, EUR).
+        data_type: string
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: currency_name
+        description: Currency display name.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: currency_modified_at
+        description: Last modification timestamp from sales.currency.
+        data_type: timestamp
