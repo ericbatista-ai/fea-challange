@@ -19,7 +19,16 @@
 -- | d | d_top5_cities.sql                 | Top 5 cities by transaction value            |
 -- | e | e_timeseries_month_year.sql       | Orders / qty / value by month & year         |
 -- | f | f_top_product_promotion.sql       | Top product by units for reason Promotion    |
+-- | — | g_sales_volume_by_territory.sql   | Volume by territory / group / country        |
+-- | — | g_sales_volume_by_territory_group.sql | Volume by territory_group (region)        |
+-- | — | g_sales_volume_by_territory_country.sql | Volume by territory country            |
+-- | — | g_top_cities_with_territory.sql   | Top cities (ship-to) + territory context     |
 -- | — | debug_gross_sales_2011.sql        | CEO / accounting 2011 gross sales audit      |
+--
+-- Geography vs territory:
+--   dim_geography  = ship-to city/state/country on the order (fact.geography_fk)
+--   dim_territory  = commercial sales region on the order (fact.territory_fk)
+--   Cities always come from geography; regions/groups from territory.
 --
 -- Bridge rule: when filtering by reason without grouping by it, use EXISTS /
 -- distinct order ids (c, d, f). When grouping by reason (a), join the bridge.
