@@ -9,3 +9,4 @@ logs/
 *.parquet
 dbt_internal_packages/
 .editorconfig
+.cursor/
