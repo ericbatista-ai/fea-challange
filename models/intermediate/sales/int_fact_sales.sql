@@ -42,6 +42,7 @@ sales_lines as (
         , order_header.customer_fk
         , order_detail.product_fk
         , order_header.credit_card_fk
+        , order_header.sales_person_fk
         , cast(date_format(order_header.order_at, 'yyyyMMdd') as INT) as order_date_fk
         , cast(
             md5(

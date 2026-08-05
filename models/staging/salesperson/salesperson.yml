@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: stg_sales_salesperson
+    description: >
+      Staging for sales.salesperson. Sales rep attributes; name comes from
+      person.person via the same BusinessEntityID.
+    columns:
+      - name: salesperson_pk
+        description: Business entity ID of the salesperson (PK).
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_humanresources_employee
+    description: >
+      Staging for humanresources.employee. Used to enrich dim_salesperson
+      (gender, hire_date, job_title). Not a standalone HR mart.
+    columns:
+      - name: employee_pk
+        description: Business entity ID of the employee (PK).
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_humanresources_department
+    description: >
+      Staging for humanresources.department. Denormalized onto
+      dim_salesperson only (no dim_department).
+    columns:
+      - name: department_pk
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_humanresources_employeedepartmenthistory
+    description: >
+      Staging for employee–department history. Current assignment =
+      department_end_date is null (used in int_salesperson).
+    columns:
+      - name: employee_fk
+        tests:
+          - not_null
+      - name: department_fk
+        tests:
+          - not_null
