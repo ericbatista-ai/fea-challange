@@ -5,6 +5,13 @@ with salesperson as (
         , salesperson_name
         , salesperson_first_name
         , salesperson_last_name
+        , job_title
+        , gender
+        , hire_date
+        , marital_status
+        , department_fk
+        , department_name
+        , department_group_name
         , territory_fk
         , sales_quota
         , bonus

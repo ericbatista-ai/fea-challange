@@ -4,9 +4,10 @@ models:
   - name: dim_salesperson
     description: >
       Salesperson dimension — one row per sales.salesperson.
-      Name from person.person (shared BusinessEntityID). Plus feature for
-      commercial ranking (Silvana / sales leadership). Join from
-      fact_sales.sales_person_fk (nullable when no rep assigned).
+      Name from person.person; HR attributes from employee; current
+      department denormalized from employeedepartmenthistory + department
+      (no separate dim_department). Use hire_date to compare tenure vs sales.
+      Join from fact_sales.sales_person_fk (nullable when no rep assigned).
     config:
       contract:
         enforced: true
@@ -33,6 +34,34 @@ models:
 
       - name: salesperson_last_name
         description: Last name from person.person.
+        data_type: string
+
+      - name: job_title
+        description: Job title from humanresources.employee.
+        data_type: string
+
+      - name: gender
+        description: Gender from humanresources.employee (M/F).
+        data_type: string
+
+      - name: hire_date
+        description: Hire date — use for tenure vs sales performance.
+        data_type: date
+
+      - name: marital_status
+        description: Marital status from humanresources.employee.
+        data_type: string
+
+      - name: department_fk
+        description: Current department id (denormalized; not a dim).
+        data_type: int
+
+      - name: department_name
+        description: Current department name (denormalized onto this dim).
+        data_type: string
+
+      - name: department_group_name
+        description: Department group (e.g. Sales and Marketing).
         data_type: string
 
       - name: territory_fk

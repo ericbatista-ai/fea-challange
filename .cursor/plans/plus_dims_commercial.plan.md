@@ -39,8 +39,7 @@ flowchart LR
 1. Staging: `stg_sales_salesperson` (+ reuse `stg_person_person`)
 2. `int_salesperson` / `dim_salesperson`: pk, name, territory_fk, bonus/quota if useful
 3. Pass `sales_person_fk` through `int_fact_sales` → `fact_sales` + contract column
-4. Analysis: top N sellers by `sum(net_line_total)` (null seller = Unassigned)
-5. Recon tests: later on `feature/data_quality_reconciliations` (do not add on dim branches)
+4. Recon tests + ranking analyses: later dedicated branches (not on this dim branch)
 
 
 **Nulls:** many online orders have null `SalesPersonID` — left join only.
@@ -61,7 +60,7 @@ flowchart LR
 2. Optional: `stg_sales_currencyrate` → `dim_currency_rate` (rate id, from/to, dates, rates) **or** denormalize from/to codes onto the fact from the rate row
 3. Wire `currency_rate_fk` on fact; derive `currency_code` (to-currency) for slicing when rate is present
 4. **Rule to document:** `currency_rate_fk` null → treat as local/USD (or `Unknown`) for reporting
-5. Analysis: volume by currency code; % null rates
+5. Analysis: later on dedicated analyses branch
 
 **Keep scope small for v1:** `dim_currency` + fact FK/attributes; add `dim_currency_rate` only if you need rate history in BI.
 
@@ -80,8 +79,8 @@ flowchart LR
 1. `stg_sales_specialoffer` → `dim_special_offer`: id, description, type, category, discount %, start/end, min qty, etc.
 2. Wire `special_offer_fk` through int → fact + contract
 3. Document offer **1 / No Discount** as baseline vs real campaigns
-4. Analysis: revenue/qty by offer type; promo vs no-discount share
-5. Optional recon: later on `feature/data_quality_reconciliations` only
+4. Analyses (campaign volume, etc.): later on dedicated analyses branch
+5. Recon: later on `feature/data_quality_reconciliations` only
 
 
 **Stakeholder story:** reason bridge = motivation; special offer = commercial campaign applied.
@@ -106,8 +105,9 @@ Any order is fine; no hard dependency between A/B/C except all touch `fact_sales
 - Marts stay `table`; contracts updated when fact columns are added
 - `||` not `concat`; same folder style (`models/.../salesperson|currency|special_offer/`)
 - Plus features: mention in README as optional commercial extensions
-- Do not rewrite a–f logic; only additive FKs/dims/analyses
+- Do not rewrite a–f logic; only additive FKs/dims on feature branches
 - **Do not add reconciliation/singular count tests on dim branches** — batch those on `feature/data_quality_reconciliations`
+- **Do not add analyses on dim branches** — batch question/ranking SQL on a dedicated analyses branch later
 
 ---
 
