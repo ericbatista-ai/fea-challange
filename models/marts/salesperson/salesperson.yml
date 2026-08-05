@@ -65,8 +65,13 @@ models:
         data_type: string
 
       - name: territory_fk
-        description: Sales territory assigned to the salesperson (nullable).
+        description: FK to dim_territory.territory_pk (nullable when unassigned).
         data_type: int
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_territory')
+                field: territory_pk
 
       - name: sales_quota
         description: Sales quota from source.

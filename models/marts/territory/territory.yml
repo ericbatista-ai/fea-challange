@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: dim_territory
+    description: >
+      Sales territory dimension — one row per sales.salesterritory.
+      Commercial region (e.g. Northwest, France, Southeast), not ship-to
+      city geography (use dim_geography for that).
+
+      Join from:
+      - fact_sales.territory_fk (order header territory)
+      - dim_customer.territory_fk
+      - dim_salesperson.territory_fk
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [territory_pk]
+    columns:
+      - name: territory_pk
+        description: Sales territory ID (natural key from sales.salesterritory).
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: territory_name
+        description: Territory display name (e.g. Northwest, United Kingdom).
+        data_type: string
+        tests:
+          - not_null
+
+      - name: country_region_fk
+        description: Country/region code for the territory (e.g. US, FR, GB).
+        data_type: string
+        tests:
+          - not_null
+
+      - name: country_region_name
+        description: Country/region display name from person.countryregion.
+        data_type: string
+
+      - name: territory_group
+        description: >
+          High-level sales group (e.g. North America, Europe, Pacific).
+          Source column is Group in sales.salesterritory.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: sales_ytd
+        description: Territory sales YTD snapshot from OLTP (attribute, not a fact measure).
+        data_type: decimal(19, 4)
+
+      - name: sales_last_year
+        description: Territory sales last-year snapshot from OLTP.
+        data_type: decimal(19, 4)
+
+      - name: cost_ytd
+        description: Territory cost YTD snapshot from OLTP.
+        data_type: decimal(19, 4)
+
+      - name: cost_last_year
+        description: Territory cost last-year snapshot from OLTP.
+        data_type: decimal(19, 4)
+
+      - name: territory_modified_at
+        description: Last modification timestamp from sales.salesterritory.
+        data_type: timestamp
