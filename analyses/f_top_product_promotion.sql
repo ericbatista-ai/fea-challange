@@ -1,20 +1,24 @@
 -- Question f
--- Product with the highest number of units purchased for sales reason
--- "Promotion".
+-- Product with the highest number of units purchased for the Promotion
+-- sales reason.
 --
--- Rule: include order lines whose header is tagged Promotion on the bridge.
--- Aggregate qty once per line (semi-join / distinct filter) so multi-reason
--- tags do not inflate units.
--- Preview: dbt show --select f_top_product_promotion --limit 10
+-- AdventureWorks note: reason Name = 'On Promotion', ReasonType = 'Promotion'.
+-- We filter on type = 'Promotion' (matches the brief wording) via dim_sales_reason.
+-- Aggregate qty once per line so multi-reason tags do not inflate units.
+-- Preview: dbt show --select f_top_product_promotion
 
 with promotion_orders as (
 
     select distinct
-        sales_order_fk as sales_order_id
+        b.sales_order_fk as sales_order_id
 
-    from {{ ref('bridge_sales_order_reason') }}
+    from {{ ref('bridge_sales_order_reason') }} as b
 
-    where sales_reason_name = 'Promotion'
+    inner join {{ ref('dim_sales_reason') }} as sr
+        on sr.sales_reason_pk = b.sales_reason_fk
+
+    where sr.sales_reason_type = 'Promotion'
+       or sr.sales_reason_name = 'On Promotion'
 
 ),
 
@@ -48,7 +52,3 @@ select
 from by_product
 
 qualify row_number() over (order by units_purchased desc) = 1
-
-order by
-    units_purchased desc
-

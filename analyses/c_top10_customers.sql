@@ -36,7 +36,7 @@ with filtered as (
     --     select 1
     --     from {{ ref('bridge_sales_order_reason') }} as b
     --     where b.sales_order_fk = f.sales_order_id
-    --       and b.sales_reason_name = 'Promotion'
+    --       and b.sales_reason_name = 'On Promotion'
     -- )
 
 ),
