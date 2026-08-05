@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: dim_salesperson
+    description: >
+      Salesperson dimension — one row per sales.salesperson.
+      Name from person.person (shared BusinessEntityID). Plus feature for
+      commercial ranking (Silvana / sales leadership). Join from
+      fact_sales.sales_person_fk (nullable when no rep assigned).
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [salesperson_pk]
+    columns:
+      - name: salesperson_pk
+        description: Natural key (BusinessEntityID).
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: salesperson_name
+        description: Full name from person.person.
+        data_type: string
+
+      - name: salesperson_first_name
+        description: First name from person.person.
+        data_type: string
+
+      - name: salesperson_last_name
+        description: Last name from person.person.
+        data_type: string
+
+      - name: territory_fk
+        description: Sales territory assigned to the salesperson (nullable).
+        data_type: int
+
+      - name: sales_quota
+        description: Sales quota from source.
+        data_type: decimal(19, 4)
+
+      - name: bonus
+        description: Bonus amount from source.
+        data_type: decimal(19, 4)
+
+      - name: commission_pct
+        description: Commission percentage from source.
+        data_type: decimal(10, 4)
+
+      - name: sales_ytd
+        description: Sales year-to-date from source (OLTP snapshot attribute).
+        data_type: decimal(19, 4)
+
+      - name: sales_last_year
+        description: Sales last year from source (OLTP snapshot attribute).
+        data_type: decimal(19, 4)
+
+      - name: salesperson_modified_at
+        description: Last modification timestamp from sales.salesperson.
+        data_type: timestamp

@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_sales_salesperson
+    description: >
+      Staging for sales.salesperson. Sales rep attributes; name comes from
+      person.person via the same BusinessEntityID.
+    columns:
+      - name: salesperson_pk
+        description: Business entity ID of the salesperson (PK).
+        tests:
+          - unique
+          - not_null
