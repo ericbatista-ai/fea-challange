@@ -68,7 +68,7 @@ flowchart LR
 
 ## Feature C — `dim_special_offer` (campaigns for Silvana)
 
-**Branch:** `feature/dim_special_offer`
+**Branch:** `feature/dim_special_offer` — **DONE**
 
 **Why:** Sales **reason** ≠ campaign. Offers are the real promo lever on each **line** (`SpecialOfferID`). This answers “which campaigns drove volume?”
 

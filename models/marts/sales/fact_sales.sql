@@ -5,6 +5,7 @@ with sales as (
         , sales_order_id
         , customer_fk
         , product_fk
+        , special_offer_fk
         , credit_card_fk
         , sales_person_fk
         , currency_rate_fk

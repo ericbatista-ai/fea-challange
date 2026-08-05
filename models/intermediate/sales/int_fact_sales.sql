@@ -54,6 +54,7 @@ sales_lines as (
         -- dimension FKs
         , order_header.customer_fk
         , order_detail.product_fk
+        , order_detail.special_offer_fk
         , order_header.credit_card_fk
         , order_header.sales_person_fk
         , order_header.currency_rate_fk
