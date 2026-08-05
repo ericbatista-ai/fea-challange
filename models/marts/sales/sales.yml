@@ -14,11 +14,14 @@ models:
 
       Dimensions (join):
       - product → dim_product (product_fk)
+      - special offer / campaign → dim_special_offer (special_offer_fk)
       - card type → dim_credit_card (credit_card_fk)
       - sales reason → bridge_sales_order_reason on sales_order_id
         (do not put reason on the fact — M:N)
       - sales date → dim_date (order_date_fk)
       - customer → dim_customer (customer_fk)
+      - salesperson → dim_salesperson (sales_person_fk; nullable / unassigned)
+      - currency → dim_currency (currency_fk = to-currency; USD when no rate)
       - status → order_status_id / order_status_name (degenerate)
       - city/state/country → dim_geography (geography_fk, ship-to)
 
@@ -75,6 +78,18 @@ models:
                 to: ref('dim_product')
                 field: product_pk
 
+      - name: special_offer_fk
+        description: >
+          FK to dim_special_offer.special_offer_pk (line-level campaign /
+          discount). Offer 1 is typically No Discount.
+        data_type: int
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_special_offer')
+                field: special_offer_pk
+
       - name: credit_card_fk
         description: FK to dim_credit_card.credit_card_pk (nullable).
         data_type: int
@@ -83,6 +98,39 @@ models:
               arguments:
                 to: ref('dim_credit_card')
                 field: credit_card_pk
+
+      - name: sales_person_fk
+        description: >
+          FK to dim_salesperson.salesperson_pk (nullable when no rep
+          is assigned, e.g. some online orders).
+        data_type: int
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_salesperson')
+                field: salesperson_pk
+
+      - name: currency_rate_fk
+        description: >
+          FK to sales.currencyrate (nullable). Null means no FX on the
+          order — currency_fk defaults to USD.
+        data_type: int
+
+      - name: currency_fk
+        description: >
+          FK to dim_currency.currency_pk (to-currency on the rate, or USD
+          when currency_rate_fk is null).
+        data_type: string
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_currency')
+                field: currency_pk
+
+      - name: from_currency_fk
+        description: From-currency on the FX rate (nullable when no rate).
+        data_type: string
 
       - name: order_date_fk
         description: FK to dim_date.date_pk (yyyyMMdd).
@@ -221,6 +269,14 @@ models:
 
       - name: order_total_due
         description: Header total due (non-additive across lines).
+        data_type: decimal(19, 4)
+
+      - name: average_rate
+        description: Average FX rate from currencyrate (nullable when no rate).
+        data_type: decimal(19, 4)
+
+      - name: end_of_day_rate
+        description: End-of-day FX rate from currencyrate (nullable when no rate).
         data_type: decimal(19, 4)
 
       - name: order_detail_modified_at

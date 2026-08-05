@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_sales_specialoffer
+    description: >
+      Staging for sales.specialoffer. Campaign / discount definitions
+      applied on order lines (SpecialOfferID). Offer 1 is typically
+      No Discount (baseline vs real promotions).
+    columns:
+      - name: special_offer_pk
+        description: Primary key of the special offer.
+        tests:
+          - unique
+          - not_null

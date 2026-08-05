@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: dim_special_offer
+    description: >
+      Special offer / campaign dimension — one row per sales.specialoffer.
+      Join from fact_sales.special_offer_fk (line-level). Distinct from
+      sales reason (motivation): this is the commercial discount applied.
+      is_promotional_offer is false for offer 1 / No Discount (baseline).
+      Plus feature for Silvana / campaign performance.
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [special_offer_pk]
+    columns:
+      - name: special_offer_pk
+        description: Natural key from sales.specialoffer.
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: special_offer_description
+        description: Offer description (e.g. No Discount, Volume Discount).
+        data_type: string
+        tests:
+          - not_null
+
+      - name: discount_pct
+        description: Discount percentage applied by the offer.
+        data_type: decimal(10, 4)
+
+      - name: special_offer_type
+        description: Offer type (e.g. No Discount, Volume Discount, Seasonal Discount).
+        data_type: string
+
+      - name: special_offer_category
+        description: Offer category (e.g. No Discount, Reseller, Customer).
+        data_type: string
+
+      - name: offer_start_at
+        description: Offer start timestamp.
+        data_type: timestamp
+
+      - name: offer_end_at
+        description: Offer end timestamp.
+        data_type: timestamp
+
+      - name: min_qty
+        description: Minimum quantity for the offer.
+        data_type: int
+
+      - name: max_qty
+        description: Maximum quantity for the offer (nullable).
+        data_type: int
+
+      - name: is_promotional_offer
+        description: >
+          False for No Discount (typically special_offer_pk = 1);
+          true for real promotional campaigns.
+        data_type: boolean
+        tests:
+          - not_null
+
+      - name: special_offer_modified_at
+        description: Last modification timestamp from sales.specialoffer.
+        data_type: timestamp

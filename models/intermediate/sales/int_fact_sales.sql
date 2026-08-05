@@ -31,6 +31,19 @@ state_province as (
 
 ),
 
+currency_rate as (
+
+    select
+        currency_rate_pk
+        , from_currency_fk
+        , to_currency_fk
+        , average_rate
+        , end_of_day_rate
+
+    from {{ ref('stg_sales_currencyrate') }}
+
+),
+
 sales_lines as (
 
     select
@@ -41,7 +54,13 @@ sales_lines as (
         -- dimension FKs
         , order_header.customer_fk
         , order_detail.product_fk
+        , order_detail.special_offer_fk
         , order_header.credit_card_fk
+        , order_header.sales_person_fk
+        , order_header.currency_rate_fk
+        -- to-currency on the rate; default USD when no FX rate on the order
+        , coalesce(currency_rate.to_currency_fk, 'USD') as currency_fk
+        , currency_rate.from_currency_fk
         , cast(date_format(order_header.order_at, 'yyyyMMdd') as INT) as order_date_fk
         , cast(
             md5(
@@ -99,6 +118,8 @@ sales_lines as (
         , order_header.order_tax_amount
         , order_header.order_freight
         , order_header.order_total_due
+        , currency_rate.average_rate
+        , currency_rate.end_of_day_rate
         , order_detail.order_detail_modified_at
         , order_header.order_modified_at
 
@@ -109,6 +130,8 @@ sales_lines as (
         on ship_address.address_pk = order_header.ship_to_address_fk
     left join state_province
         on state_province.state_province_pk = ship_address.state_province_fk
+    left join currency_rate
+        on currency_rate.currency_rate_pk = order_header.currency_rate_fk
 
 )
 

@@ -5,7 +5,12 @@ with sales as (
         , sales_order_id
         , customer_fk
         , product_fk
+        , special_offer_fk
         , credit_card_fk
+        , sales_person_fk
+        , currency_rate_fk
+        , currency_fk
+        , from_currency_fk
         , order_date_fk
         , geography_fk
         , ship_to_address_fk
@@ -31,6 +36,8 @@ with sales as (
         , order_tax_amount
         , order_freight
         , order_total_due
+        , average_rate
+        , end_of_day_rate
         , order_detail_modified_at
         , order_modified_at
 
