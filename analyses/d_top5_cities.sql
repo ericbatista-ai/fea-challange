@@ -68,7 +68,8 @@ select
 
 from by_city
 
+qualify row_number() over (order by total_transaction_value desc) <= 5
+
 order by
     total_transaction_value desc
 
-limit 5

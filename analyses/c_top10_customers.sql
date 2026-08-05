@@ -68,7 +68,8 @@ select
 
 from by_customer
 
+qualify row_number() over (order by total_transaction_value desc) <= 10
+
+
 order by
     total_transaction_value desc
-
-limit 10

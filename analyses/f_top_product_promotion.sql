@@ -47,7 +47,8 @@ select
 
 from by_product
 
+qualify row_number() over (order by units_purchased desc) = 1
+
 order by
     units_purchased desc
 
-limit 1
