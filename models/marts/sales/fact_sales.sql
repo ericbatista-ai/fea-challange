@@ -6,6 +6,7 @@ with sales as (
         , customer_fk
         , product_fk
         , credit_card_fk
+        , sales_person_fk
         , order_date_fk
         , geography_fk
         , ship_to_address_fk

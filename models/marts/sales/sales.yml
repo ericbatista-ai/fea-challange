@@ -19,6 +19,7 @@ models:
         (do not put reason on the fact — M:N)
       - sales date → dim_date (order_date_fk)
       - customer → dim_customer (customer_fk)
+      - salesperson → dim_salesperson (sales_person_fk; nullable / unassigned)
       - status → order_status_id / order_status_name (degenerate)
       - city/state/country → dim_geography (geography_fk, ship-to)
 
@@ -83,6 +84,17 @@ models:
               arguments:
                 to: ref('dim_credit_card')
                 field: credit_card_pk
+
+      - name: sales_person_fk
+        description: >
+          FK to dim_salesperson.salesperson_pk (nullable when no rep
+          is assigned, e.g. some online orders).
+        data_type: int
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_salesperson')
+                field: salesperson_pk
 
       - name: order_date_fk
         description: FK to dim_date.date_pk (yyyyMMdd).
