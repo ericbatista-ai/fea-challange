@@ -20,10 +20,14 @@ models:
           - not_null
 
       - name: territory_fk
-        description: foreign key to join with dim_territory
+        description: FK to dim_territory.territory_pk.
         data_type: int
         tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_territory')
+                field: territory_pk
 
       - name: customer_modified_at
         description: Last modification timestamp from sales.customer.

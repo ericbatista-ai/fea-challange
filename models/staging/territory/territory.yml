@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_sales_salesterritory
+    description: >
+      Staging for sales.salesterritory. Commercial sales regions
+      (distinct from ship-to dim_geography). Feeds dim_territory.
+    columns:
+      - name: territory_pk
+        description: Sales territory ID (PK).
+        tests:
+          - unique
+          - not_null
+
+      - name: territory_name
+        description: Territory display name (e.g. Northwest, France).
+        tests:
+          - not_null
+
+      - name: country_region_fk
+        description: Country/region code — join to stg_person_countryregion.
+        tests:
+          - not_null

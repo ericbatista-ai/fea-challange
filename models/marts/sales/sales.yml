@@ -24,6 +24,7 @@ models:
       - currency → dim_currency (currency_fk = to-currency; USD when no rate)
       - status → order_status_id / order_status_name (degenerate)
       - city/state/country → dim_geography (geography_fk, ship-to)
+      - sales territory → dim_territory (territory_fk; commercial region, not city geo)
 
       Question f: filter bridge where sales_reason_name = 'Promotion',
       then sum(order_qty) by product_fk.
@@ -160,8 +161,13 @@ models:
         data_type: int
 
       - name: territory_fk
-        description: Sales territory ID from the order header.
+        description: FK to dim_territory.territory_pk (order header sales territory).
         data_type: int
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_territory')
+                field: territory_pk
 
       - name: order_date
         description: Order calendar date (for filters and time series).
