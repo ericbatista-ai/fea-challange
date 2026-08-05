@@ -80,6 +80,7 @@ dbt build --profiles-dir . --select dim_date
 ```
 
 - Sources: `models/raw/_adventureworks_raw__sources.yml`
-- Domains: `models/staging|intermediate|marts/{customer,geography,product,credit_card,sales_reason,date}/` + `marts/bridges/`
-- Packages: `packages.yml` (`dbt_utils` for `dim_date` spine and bridge composite keys) — run `dbt deps` once after clone/pull
+- Domains: `models/staging|intermediate|marts/{customer,geography,product,credit_card,sales_reason,date,sales}/` + `marts/bridges/`
+- Packages: `packages.yml` (`dbt_utils`) — run `dbt deps` once after clone/pull
 - Schemas de saída: `staging`, `intermediate`, `marts` (via `dbt_project.yml` + `generate_schema_name`)
+- Audit: `tests/assert_gross_sales_2011.sql` (2011 net sales = 12,646,112.16)

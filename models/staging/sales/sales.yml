@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_sales_salesorderheader
+    description: >
+      Staging for sales.salesorderheader. Order header attributes
+      (customer, dates, status, ship-to, credit card, totals).
+    columns:
+      - name: sales_order_pk
+        description: Primary key of the sales order.
+        tests:
+          - unique
+          - not_null
+      - name: customer_fk
+        tests:
+          - not_null
+      - name: order_at
+        tests:
+          - not_null
+
+  - name: stg_sales_salesorderdetail
+    description: >
+      Staging for sales.salesorderdetail. Order line grain — quantity,
+      product, prices, discounts, and line_total.
+    columns:
+      - name: sales_order_detail_pk
+        description: Primary key of the sales order line.
+        tests:
+          - unique
+          - not_null
+      - name: sales_order_fk
+        tests:
+          - not_null
+      - name: product_fk
+        tests:
+          - not_null
+      - name: order_qty
+        tests:
+          - not_null

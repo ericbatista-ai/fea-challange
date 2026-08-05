@@ -1,0 +1,222 @@
+version: 2
+
+models:
+  - name: fact_sales
+    description: >
+      Sales fact at order-line grain (one row per sales_order_detail_pk).
+
+      Metrics:
+      - number of orders → count(distinct sales_order_id)
+      - quantity purchased → sum(order_qty)
+      - total transaction value → sum(net_line_total)
+        (AW LineTotal = gross_line_value - discount_amount)
+      - AOV (question b) → sum(net_line_total) / count(distinct sales_order_id)
+
+      Dimensions (join):
+      - product → dim_product (product_fk)
+      - card type → dim_credit_card (credit_card_fk)
+      - sales reason → bridge_sales_order_reason on sales_order_id
+        (do not put reason on the fact — M:N)
+      - sales date → dim_date (order_date_fk)
+      - customer → dim_customer (customer_fk)
+      - status → order_status_id / order_status_name (degenerate)
+      - city/state/country → dim_geography (geography_fk, ship-to)
+
+      Question f: filter bridge where sales_reason_name = 'Promotion',
+      then sum(order_qty) by product_fk.
+    config:
+      contract:
+        enforced: true
+      tags: ["fact", "mart", "sales"]
+    constraints:
+      - type: primary_key
+        columns: [sales_order_detail_pk]
+    columns:
+      - name: sales_order_detail_pk
+        description: Natural key of the order line (fact grain).
+        data_type: int
+        constraints:
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_order_id
+        description: Order header ID — join to bridge_sales_order_reason.
+        data_type: int
+        tests:
+          - not_null
+
+      - name: customer_fk
+        description: FK to dim_customer.customer_pk.
+        data_type: int
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_pk
+
+      - name: product_fk
+        description: FK to dim_product.product_pk.
+        data_type: int
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_pk
+
+      - name: credit_card_fk
+        description: FK to dim_credit_card.credit_card_pk (nullable).
+        data_type: int
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_credit_card')
+                field: credit_card_pk
+
+      - name: order_date_fk
+        description: FK to dim_date.date_pk (yyyyMMdd).
+        data_type: int
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_pk
+
+      - name: geography_fk
+        description: FK to dim_geography.geography_pk (ship-to city/state/country).
+        data_type: string
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_geography')
+                field: geography_pk
+
+      - name: ship_to_address_fk
+        description: Ship-to address ID from the order header.
+        data_type: int
+
+      - name: bill_to_address_fk
+        description: Bill-to address ID from the order header.
+        data_type: int
+
+      - name: territory_fk
+        description: Sales territory ID from the order header.
+        data_type: int
+
+      - name: order_date
+        description: Order calendar date (for filters and time series).
+        data_type: date
+        tests:
+          - not_null
+
+      - name: order_year
+        description: Order year (question e / 2011 audit).
+        data_type: int
+        tests:
+          - not_null
+
+      - name: order_month
+        description: Order month number 1–12.
+        data_type: int
+        tests:
+          - not_null
+
+      - name: order_year_month
+        description: Year-month label yyyy-MM for time-series charts.
+        data_type: string
+
+      - name: order_status_id
+        description: AdventureWorks status code (1–6).
+        data_type: int
+        tests:
+          - not_null
+
+      - name: order_status_name
+        description: Status label (In process, Approved, Backordered, Rejected, Shipped, Cancelled).
+        data_type: string
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 'In process'
+                  - 'Approved'
+                  - 'Backordered'
+                  - 'Rejected'
+                  - 'Shipped'
+                  - 'Cancelled'
+                  - 'Unknown'
+
+      - name: is_online_order
+        description: True when the order was placed online.
+        data_type: boolean
+
+      - name: order_at
+        description: Order timestamp from the header.
+        data_type: timestamp
+
+      - name: due_at
+        description: Due timestamp from the header.
+        data_type: timestamp
+
+      - name: ship_at
+        description: Ship timestamp from the header (nullable).
+        data_type: timestamp
+
+      - name: order_qty
+        description: Units purchased on the line (sum for quantity metrics).
+        data_type: int
+        tests:
+          - not_null
+
+      - name: unit_price
+        description: Unit price before discount.
+        data_type: decimal(19, 4)
+
+      - name: unit_price_discount_rate
+        description: Discount rate on the unit price (0–1).
+        data_type: decimal(19, 4)
+
+      - name: gross_line_value
+        description: Gross revenue on the line (unit_price * order_qty).
+        data_type: decimal(19, 4)
+
+      - name: discount_amount
+        description: Product discount amount on the line.
+        data_type: decimal(19, 4)
+
+      - name: net_line_total
+        description: >
+          Net transaction value (AW LineTotal = gross - product discounts).
+          Primary measure for total transaction value and AOV numerator.
+        data_type: decimal(19, 4)
+        tests:
+          - not_null
+
+      - name: order_subtotal
+        description: Header subtotal (repeated on each line — do not sum across lines).
+        data_type: decimal(19, 4)
+
+      - name: order_tax_amount
+        description: Header tax amount (non-additive across lines).
+        data_type: decimal(19, 4)
+
+      - name: order_freight
+        description: Header freight amount (non-additive across lines).
+        data_type: decimal(19, 4)
+
+      - name: order_total_due
+        description: Header total due (non-additive across lines).
+        data_type: decimal(19, 4)
+
+      - name: order_detail_modified_at
+        description: Modified timestamp from the order line.
+        data_type: timestamp
+
+      - name: order_modified_at
+        description: Modified timestamp from the order header.
+        data_type: timestamp
