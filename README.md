@@ -83,4 +83,4 @@ dbt build --profiles-dir . --select dim_date
 - Domains: `models/staging|intermediate|marts/{customer,geography,product,credit_card,sales_reason,date,sales}/` + `marts/bridges/`
 - Packages: `packages.yml` (`dbt_utils`) — run `dbt deps` once after clone/pull
 - Schemas de saída: `staging`, `intermediate`, `marts` (via `dbt_project.yml` + `generate_schema_name`)
-- Audit: `tests/assert_gross_sales_2011.sql` (2011 net sales = 12,646,112.16)
+- Audit: `tests/assert_gross_sales_2011.sql` — 2011 net sales = **12,641,672.21** (Postgres source); brief’s 12,646,112.16 does not match this dataset

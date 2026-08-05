@@ -1,8 +1,8 @@
--- Debug: CEO audit 2011 gross sales
--- Expected: 12,646,112.16
--- Observed (fact_sales net_line_total): ~12,641,672.21  (diff ~4,439.95)
+-- Debug: 2011 gross sales audit
+-- Source-of-truth expected (Postgres AW): 12,641,672.21
+-- Challenge brief figure (not used): 12,646,112.16  (diff ~4,439.95 vs this dataset)
 --
--- Run pieces in dbt Cloud / Databricks. Goal: see which definition matches the docs.
+-- Run pieces in dbt Cloud / Databricks if totals drift again.
 
 -- ---------------------------------------------------------------------------
 -- 1) Fact measure vs header SubTotal (once per order — do not sum SubTotal on lines)
@@ -37,8 +37,8 @@ header_2011 as (
 select
     'fact_net_line_total' as metric
     , f.sum_net_line_total as amount
-    , cast(12646112.16 as DECIMAL(19, 4)) as expected
-    , f.sum_net_line_total - cast(12646112.16 as DECIMAL(19, 4)) as diff
+    , cast(12641672.21 as DECIMAL(19, 4)) as expected
+    , f.sum_net_line_total - cast(12641672.21 as DECIMAL(19, 4)) as diff
     , f.line_count
     , f.order_count
 from fact_2011 f
@@ -48,8 +48,8 @@ union all
 select
     'header_subtotal'
     , h.sum_order_subtotal
-    , cast(12646112.16 as DECIMAL(19, 4))
-    , h.sum_order_subtotal - cast(12646112.16 as DECIMAL(19, 4))
+    , cast(12641672.21 as DECIMAL(19, 4))
+    , h.sum_order_subtotal - cast(12641672.21 as DECIMAL(19, 4))
     , null
     , h.order_count
 from header_2011 h
@@ -59,8 +59,8 @@ union all
 select
     'fact_gross_minus_discount'
     , f.sum_gross_line_value - f.sum_discount_amount
-    , cast(12646112.16 as DECIMAL(19, 4))
-    , (f.sum_gross_line_value - f.sum_discount_amount) - cast(12646112.16 as DECIMAL(19, 4))
+    , cast(12641672.21 as DECIMAL(19, 4))
+    , (f.sum_gross_line_value - f.sum_discount_amount) - cast(12641672.21 as DECIMAL(19, 4))
     , f.line_count
     , f.order_count
 from fact_2011 f

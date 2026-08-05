@@ -24,6 +24,14 @@ models:
 
       Question f: filter bridge where sales_reason_name = 'Promotion',
       then sum(order_qty) by product_fk.
+
+      Data quality / 2011 gross sales audit:
+      Expected sum(net_line_total) for 2011 = 12,641,672.21 (see
+      tests/assert_gross_sales_2011). The challenge brief cites
+      12,646,112.16; that value does not match the AdventureWorks
+      PostgreSQL dataset used here (validated on local Postgres
+      SUM(salesorderheader.subtotal) for 2011). Gap ~4,439.95 is a
+      source/edition difference, not a dbt bug.
     config:
       contract:
         enforced: true
@@ -193,6 +201,8 @@ models:
         description: >
           Net transaction value (AW LineTotal = gross - product discounts).
           Primary measure for total transaction value and AOV numerator.
+          2011 audit target: sum(net_line_total) = 12,641,672.21 based on
+          the PostgreSQL source dataset (not the brief's 12,646,112.16).
         data_type: decimal(19, 4)
         tests:
           - not_null
