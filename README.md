@@ -84,3 +84,5 @@ dbt build --profiles-dir . --select dim_date
 - Packages: `packages.yml` (`dbt_utils`) — run `dbt deps` once after clone/pull
 - Schemas de saída: `staging`, `intermediate`, `marts` (via `dbt_project.yml` + `generate_schema_name`)
 - Audit: `tests/assert_gross_sales_2011.sql` — 2011 net sales = **12,641,672.21** (Postgres source); brief’s 12,646,112.16 does not match this dataset
+- Reconciliations: `tests/reconciliations/` — row counts and FK integrity raw → staging → marts (`dbt test -s path:tests/reconciliations`)
+

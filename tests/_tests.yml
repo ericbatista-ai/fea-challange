@@ -13,3 +13,50 @@ data_tests:
       aligned with recomputed line totals and with Databricks/dbt fact_sales.
       The ~4,439.95 gap vs the brief is a source/edition difference, not a
       transformation error.
+
+  - name: assert_fact_sales_line_count_matches_raw
+    description: >
+      fact_sales row count equals adventureworks_raw.sales_salesorderdetail
+      (order-line grain preserved end-to-end).
+
+  - name: assert_fact_sales_order_count_matches_raw
+    description: >
+      count(distinct fact_sales.sales_order_id) equals
+      adventureworks_raw.sales_salesorderheader row count.
+
+  - name: assert_fact_sales_amount_matches_header_subtotal
+    description: >
+      sum(fact_sales.net_line_total) matches sum(stg header order_subtotal)
+      for all time (±0.05). Ensures financial reconciliation to source headers.
+
+  - name: assert_bridge_sales_order_reason_count_matches_raw
+    description: >
+      bridge_sales_order_reason row count equals
+      adventureworks_raw.sales_salesorderheadersalesreason.
+
+  - name: assert_dim_customer_count_matches_raw
+    description: dim_customer count equals adventureworks_raw.sales_customer.
+
+  - name: assert_dim_product_count_matches_raw
+    description: dim_product count equals adventureworks_raw.production_product.
+
+  - name: assert_dim_credit_card_count_matches_raw
+    description: dim_credit_card count equals adventureworks_raw.sales_creditcard.
+
+  - name: assert_dim_sales_reason_count_matches_raw
+    description: dim_sales_reason count equals adventureworks_raw.sales_salesreason.
+
+  - name: assert_dim_geography_count_matches_raw
+    description: >
+      dim_geography count equals distinct city + state + country keys
+      derived from person_address / person_stateprovince (same grain as the dim).
+
+  - name: assert_fact_sales_fks_exist_in_dims
+    description: >
+      No orphan foreign keys on fact_sales for customer, product, order_date,
+      geography (when not null), or credit_card (when not null).
+
+  - name: assert_staging_sales_counts_match_raw
+    description: >
+      Key staging models preserve raw row counts (order header/detail,
+      customer, product, credit card, sales reason).
