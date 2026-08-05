@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_sales_currency
+    description: >
+      Staging for sales.currency. Currency codes and names for
+      dim_currency and volume-by-currency analysis.
+    columns:
+      - name: currency_pk
+        description: ISO-style currency code (PK).
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales_currencyrate
+    description: >
+      Staging for sales.currencyrate. Used in int_fact_sales to resolve
+      from/to currency on an order (not a separate dim in v1).
+    columns:
+      - name: currency_rate_pk
+        tests:
+          - unique
+          - not_null
